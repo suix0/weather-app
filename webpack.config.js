@@ -1,8 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { optimize } = require('webpack');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.js',
   output: {
     filename: 'main.js',
@@ -15,6 +15,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Weather App',
+      template: './src/index.html'
     }),
   ],
   module: {
@@ -28,8 +29,5 @@ module.exports = {
         type: 'asset/resource',
       }
     ],
-  },
-  optimization: {
-    runtimeChunk: 'single',
   },
 };

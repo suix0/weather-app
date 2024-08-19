@@ -1,0 +1,41 @@
+body {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, p {
+  margin: 0;
+  font-weight: normal;
+}
+
+input {
+  margin: 3rem;
+  padding: 0.5rem;
+  width: 25vw;
+  height: 5vh;
+  border: 1px solid black;
+  font-size: 100%;
+}
+
+.weatherContainer {
+  width: 90%;
+  height: 90%;
+  padding: 1rem;
+}
+
+.mainData {
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 3rem;
+  gap: 1rem;
+  width: 30%;
+  height: 50%;
+}
