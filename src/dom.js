@@ -1,3 +1,5 @@
+import { currentHour } from "./displayWeather";
+
 const addElement = (mainContainer, miniContainer, val, elementType, fontSize) => {
   const element = document.createElement(elementType);
   if (fontSize) {
@@ -10,20 +12,20 @@ const addElement = (mainContainer, miniContainer, val, elementType, fontSize) =>
   mainContainer.appendChild(miniContainer);
 }
 
-const displayHourlyData = (currentHour, mainContainer, hourlyContainer, array) => {
+const displayWeatherData = (type, mainContainer, weatherContainer, array) => {
   // Create the display for each hours
-  const hourlyDataDomArrays = array.map((hourlyData) => {
+  const weatherDataDomArrays = array.map((weatherData) => {
     const currentDiv = document.createElement('div');
 
     // Weather Time
-    const weatherTime = document.createElement('p');
-    if (hourlyData.datetime === currentHour) {
-      weatherTime.textContent = 'Now';
+    const weatherDateTime = document.createElement('p');
+    if (weatherData.datetime === currentHour) {
+      weatherDateTime.textContent = 'Now';
     } else {
-      weatherTime.textContent = hourlyData.datetime;
+      weatherDateTime.textContent = weatherData.datetime;
     }
-    weatherTime.style.fontSize = '1rem';
-    currentDiv.appendChild(weatherTime);
+    weatherDateTime.style.fontSize = type === '1rem'
+    currentDiv.appendChild(weatherDateTime);
 
     // Weather Icon
     const weatherIconPlaceholder = document.createElement('img');
@@ -31,26 +33,26 @@ const displayHourlyData = (currentHour, mainContainer, hourlyContainer, array) =
 
     // Weather Temperature
     const weatherTemp = document.createElement('p');
-    weatherTemp.style.fontSize = '2rem';
-    weatherTemp.textContent = `${hourlyData.temp}°F`;
+    weatherTemp.style.fontSize = type === 'hourly' ? '1.5rem' : '3rem';;
+    weatherTemp.textContent = `${weatherData.temp}°F`;
     currentDiv.appendChild(weatherTemp);
 
     // Weather Condition
     const weatherDescription = document.createElement('p');
     weatherDescription.style.fontSize = '1rem';
-    weatherDescription.textContent = `${hourlyData.conditions}`;
+    weatherDescription.textContent = `${weatherData.conditions}`;
     currentDiv.appendChild(weatherDescription);
 
     return currentDiv;
   })
 
   // Append each transformed divs to the hourly container
-  hourlyDataDomArrays.forEach((hourlyData) => {
-    hourlyContainer.appendChild(hourlyData);
+  weatherDataDomArrays.forEach((weatherData) => {
+    weatherContainer.appendChild(weatherData);
   })
 
   // Append the hourly data container to the main container
-  mainContainer.appendChild(hourlyContainer);
+  mainContainer.appendChild(weatherContainer);
 }
 
-export { addElement, displayHourlyData };
+export { addElement, displayWeatherData };
