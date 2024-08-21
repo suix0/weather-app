@@ -1,4 +1,4 @@
-import { addElement } from "./dom";
+import { addElement, displayHourlyData } from "./dom";
 import { changeTimeFormat, filterHours } from "./weatherFunctions";
 import { format } from 'date-fns';
 
@@ -27,12 +27,14 @@ const displayWeather = (weatherData) => {
     changeTimeFormat(hourlyObjects, 'HH:mm:ss', 'h a');
   })
 
-  console.log(hourlyWeatherData);
   // Filter the array and return only the hours from
   // Current hour until 6 hours later
   const filteredHours = filterHours(currentHour, hourlyWeatherData);
-  console.log(filteredHours)
-  // filteredHours.splice(6, filteredHours.length - 5);
+
+  // Display hourly data cards
+  const hourlyWeatherDataDiv = document.createElement('div');
+  hourlyWeatherDataDiv.className = 'hourlyData';
+  displayHourlyData(currentHour, weatherContainer, hourlyWeatherDataDiv, filteredHours);
  }
 
 export { displayWeather }
