@@ -1,4 +1,5 @@
 import { currentHour } from "./displayWeather";
+import { changeDateFormat, displayWeatherIcon } from "./weatherFunctions";
 
 const addElement = (mainContainer, miniContainer, val, elementType, fontSize) => {
   const element = document.createElement(elementType);
@@ -22,13 +23,19 @@ const displayWeatherData = (type, mainContainer, weatherContainer, array) => {
     if (weatherData.datetime === currentHour) {
       weatherDateTime.textContent = 'Now';
     } else {
-      weatherDateTime.textContent = weatherData.datetime;
+      if (type === 'hourly') {
+        weatherDateTime.textContent = weatherData.datetime;
+      } else {
+        weatherDateTime.textContent = changeDateFormat(weatherData.datetime);
+      }
     }
     weatherDateTime.style.fontSize = type === '1rem'
     currentDiv.appendChild(weatherDateTime);
 
     // Weather Icon
     const weatherIconPlaceholder = document.createElement('img');
+    weatherIconPlaceholder.className = type === 'hourly' ? 'iconsForHourly' : 'iconsForDaily';
+    weatherIconPlaceholder.src = displayWeatherIcon(weatherData.icon);  
     currentDiv.appendChild(weatherIconPlaceholder);
 
     // Weather Temperature
