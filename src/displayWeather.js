@@ -1,12 +1,11 @@
 import { addElement, displayWeatherData } from "./dom";
 import { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates } from "./weatherFunctions";
+import { currentMeasurement } from "./dom";
 import { format } from 'date-fns';
 
 const currentHour = format(new Date(), 'h a'); // Get current time and format
 
 const displayWeather = (weatherData) => {
-  console.log(weatherData);
-
   // Display main information for current weather data
   const weatherContainer = document.querySelector('.weatherContainer');
   weatherContainer.innerText = '';
@@ -14,17 +13,24 @@ const displayWeather = (weatherData) => {
   mainWeatherDataDiv.className = 'mainData';
   addElement(weatherContainer, mainWeatherDataDiv, `Today , ${changeDateFormat(weatherData.days[0].datetime)}`, 'p', '1rem'); // Add current date
   addElement(weatherContainer, mainWeatherDataDiv, weatherData.resolvedAddress, 'p', '2rem'); // Add the location 
+
   const midDiv = document.createElement('div');
   midDiv.className = 'currentWeatherData';
-  addElement(mainWeatherDataDiv, midDiv, `${weatherData.currentConditions.temp}°F`, 'p', '4rem'); // Add weather temp
+  const weatherMainText = document.createElement('span');
+  weatherMainText.classList.add(currentMeasurement);
+  weatherMainText.classList.add('mainTemp')
+  weatherMainText.textContent =  currentMeasurement === 'farenheit' ? `${weatherData.currentConditions.temp}°F` : `${weatherData.currentConditions.temp}°C`;
+  midDiv.appendChild(weatherMainText);
+  mainWeatherDataDiv.appendChild(midDiv);
   addElement(weatherContainer, mainWeatherDataDiv, weatherData.currentConditions.conditions, 'p', '2rem'); // Add weather conditions
+
   // Add and display appropriate weather icon
   const weatherImage = document.createElement('img');
   weatherImage.className = 'mainImage';
   weatherImage.src = displayWeatherIcon(weatherData.days[0].icon);
   midDiv.appendChild(weatherImage);
-  addElement(weatherContainer, mainWeatherDataDiv, `Max Temperature:${weatherData.days[0].tempmax}°F`, 'p', '1rem') 
-  addElement(weatherContainer, mainWeatherDataDiv, `Min Temperature:${weatherData.days[0].tempmin}°F`, 'p', '1rem') 
+  addElement(weatherContainer, mainWeatherDataDiv, `Max Temperature: ${weatherData.days[0].tempmax}°F`, 'p', '1rem') 
+  addElement(weatherContainer, mainWeatherDataDiv, `Min Temperature: ${weatherData.days[0].tempmin}°F`, 'p', '1rem') 
   // Display hourly weather information
   const hourlyWeatherData = weatherData.days[0].hours;
 

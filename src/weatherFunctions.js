@@ -100,4 +100,9 @@ const filterDates = (dates) => {
   return newDates;
 }
 
-export { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates };
+const convertTemperatureMeasurement = () => {
+  const tempArr = document.querySelectorAll('span');
+  console.log(tempArr);
+}
+
+export { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates, convertTemperatureMeasurement };
