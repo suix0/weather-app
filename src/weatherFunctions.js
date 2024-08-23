@@ -1,4 +1,5 @@
 import { format, parse } from "date-fns";
+import fetchWeatherData from "./fetch";
 import snow from './resources/WeatherIcons/SVG/1st-set/snow.svg';
 import snowShowersDay from './resources/WeatherIcons/SVG/1st-set/snow-showers-day.svg';
 import snowShowersNight from './resources/WeatherIcons/SVG/1st-set/snow-showers-night.svg';
@@ -100,9 +101,33 @@ const filterDates = (dates) => {
   return newDates;
 }
 
-const convertTemperatureMeasurement = () => {
-  const tempArr = document.querySelectorAll('span');
-  console.log(tempArr);
+let currentMeasurement = 'metric';
+
+const returnCurrentMeasurement = () => {
+  return currentMeasurement;
 }
 
-export { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates, convertTemperatureMeasurement };
+const convertTemperatureMeasurement = () => {
+  const switchTempMeasurementButton = document.querySelector('a');
+  const spans = document.querySelectorAll('span');
+  const spansArr = [...spans]
+  console.log(spansArr);
+  if (returnCurrentMeasurement() === 'metric') {
+    currentMeasurement = 'us';
+    fetchWeatherData();
+    switchTempMeasurementButton.textContent = 'F°';
+    spansArr.map((spans) => {
+      spans.className = 'us';
+    })
+
+  } else if (returnCurrentMeasurement() === 'us') {
+    currentMeasurement = 'metric';
+    fetchWeatherData();
+    switchTempMeasurementButton.textContent = 'C°';
+    spansArr.map((spans) => {
+      spans.className = 'metric';
+    })
+  }
+}
+
+export { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates, returnCurrentMeasurement, convertTemperatureMeasurement };

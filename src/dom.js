@@ -1,7 +1,5 @@
 import { currentHour } from "./displayWeather";
-import { changeDateFormat, displayWeatherIcon } from "./weatherFunctions";
-
-let currentMeasurement = 'farenheit';
+import { changeDateFormat, displayWeatherIcon, returnCurrentMeasurement } from "./weatherFunctions";
 
 const addElement = (mainContainer, miniContainer, val, elementType, fontSize) => {
   const element = document.createElement(elementType);
@@ -43,9 +41,9 @@ const displayWeatherData = (type, mainContainer, weatherContainer, array) => {
 
     // Weather Temperature
     const weatherTemp = document.createElement('span');
-    weatherTemp.className = currentMeasurement;
+    weatherTemp.className = returnCurrentMeasurement();
     weatherTemp.style.fontSize = type === 'hourly' ? '1.5rem' : '3rem';;
-    weatherTemp.textContent = currentMeasurement === 'farenheit' ? `${weatherData.temp}°F` : `${weatherData.temp}°F`;
+    weatherTemp.textContent = returnCurrentMeasurement() === 'us' ? `${weatherData.temp}°F` : `${weatherData.temp}°C`;
     currentDiv.appendChild(weatherTemp);
 
     // Weather Condition
@@ -66,4 +64,4 @@ const displayWeatherData = (type, mainContainer, weatherContainer, array) => {
   mainContainer.appendChild(weatherContainer);
 }
 
-export { addElement, displayWeatherData, currentMeasurement };
+export { addElement, displayWeatherData };

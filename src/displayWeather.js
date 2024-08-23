@@ -1,6 +1,5 @@
 import { addElement, displayWeatherData } from "./dom";
-import { changeTimeFormat, changeDateFormat, displayWeatherIcon, filterHours, filterDates } from "./weatherFunctions";
-import { currentMeasurement } from "./dom";
+import { changeTimeFormat, changeDateFormat, displayWeatherIcon, returnCurrentMeasurement, filterHours, filterDates } from "./weatherFunctions";
 import { format } from 'date-fns';
 
 const currentHour = format(new Date(), 'h a'); // Get current time and format
@@ -16,11 +15,12 @@ const displayWeather = (weatherData) => {
 
   const midDiv = document.createElement('div');
   midDiv.className = 'currentWeatherData';
-  const weatherMainText = document.createElement('span');
-  weatherMainText.classList.add(currentMeasurement);
-  weatherMainText.classList.add('mainTemp')
-  weatherMainText.textContent =  currentMeasurement === 'farenheit' ? `${weatherData.currentConditions.temp}°F` : `${weatherData.currentConditions.temp}°C`;
-  midDiv.appendChild(weatherMainText);
+  const weatherMainTemp = document.createElement('span');
+  weatherMainTemp.style.fontSize = '4rem';
+  midDiv.appendChild(weatherMainTemp);
+  weatherMainTemp.classList.add(returnCurrentMeasurement());
+  weatherMainTemp.classList.add('mainTemp')
+  weatherMainTemp.textContent =  returnCurrentMeasurement() === 'us' ? `${weatherData.currentConditions.temp}°F` : `${weatherData.currentConditions.temp}°C`;
   mainWeatherDataDiv.appendChild(midDiv);
   addElement(weatherContainer, mainWeatherDataDiv, weatherData.currentConditions.conditions, 'p', '2rem'); // Add weather conditions
 
@@ -47,7 +47,6 @@ const displayWeather = (weatherData) => {
   const hourlyWeatherDataDiv = document.createElement('div');
   hourlyWeatherDataDiv.className = 'hourlyData';
   displayWeatherData('hourly', weatherContainer, hourlyWeatherDataDiv, filteredHours);
-
 
   // Display daily data cards
   // Get an array of 4 days worth of data
