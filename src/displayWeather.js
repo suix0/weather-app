@@ -29,8 +29,8 @@ const displayWeather = (weatherData) => {
   weatherImage.className = 'mainImage';
   weatherImage.src = displayWeatherIcon(weatherData.days[0].icon);
   midDiv.appendChild(weatherImage);
-  addElement(weatherContainer, mainWeatherDataDiv, `Max Temperature: ${weatherData.days[0].tempmax}°F`, 'p', '1rem') 
-  addElement(weatherContainer, mainWeatherDataDiv, `Min Temperature: ${weatherData.days[0].tempmin}°F`, 'p', '1rem') 
+  addElement(weatherContainer, mainWeatherDataDiv, `Max Temperature: ${weatherData.days[0].tempmax} ${returnCurrentMeasurement() === 'us' ? '°F' : '°C'}`, 'p', '1rem') 
+  addElement(weatherContainer, mainWeatherDataDiv, `Min Temperature: ${weatherData.days[0].tempmin} ${returnCurrentMeasurement() === 'us' ? '°F' : '°C'}`, 'p', '1rem') 
   // Display hourly weather information
   const hourlyWeatherData = weatherData.days[0].hours;
 
